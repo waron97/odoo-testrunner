@@ -1,4 +1,4 @@
-FROM python:3.9-slim AS testrunner
+FROM python:3.12-slim AS testrunner
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
@@ -48,11 +48,6 @@ RUN pip install --no-cache-dir -r /opt/odoo/base/requirements.txt
 # Install manifestoo for OCA-style addon discovery
 RUN pip install --no-cache-dir manifestoo
 
-# Create addons directory and copy if it exists
-RUN mkdir -p /opt/odoo/addons
-
-RUN echo hello
-
 # Install cryptography and related packages with proper compilation
 RUN pip install --upgrade pip
 RUN pip install --upgrade urllib3
@@ -68,8 +63,10 @@ COPY --chown=odoo:odoo odoo.conf /opt/odoo/odoo.conf
 COPY --chown=odoo:odoo entrypoint.sh /opt/odoo/entrypoint.sh
 
 RUN mkdir -p /opt/odoo/logs
+RUN mkdir -p /opt/odoo/addons
 
 WORKDIR /opt/odoo/addons
+USER odoo
 ENTRYPOINT ["/opt/odoo/entrypoint.sh"]
 
 # Set default command (empty, entrypoint handles everything)

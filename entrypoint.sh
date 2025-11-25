@@ -70,7 +70,7 @@ discover_addons() {
 
 install_requirements() {
     find /opt/odoo/addons -name "requirements.txt" -not -path "*/symple_addons/*" -exec pip install --no-cache-dir -r {} \; 2>/dev/null || echo "No requirements.txt files found in addons"
-    pip install "cryptography==37.0.0" "pyopenssl==22.0.0"
+    pip install "cryptography==37.0.0" "pyopenssl==22.0.0" "paramiko<3.0"
 }
 
 install_depends() {
@@ -163,4 +163,3 @@ discover_addons
 
 install_depends
 install_all_addons
-activate_it_lang
