@@ -62,9 +62,6 @@ RUN find /opt/odoo/symple_addons -name "requirements.txt" -exec pip install --no
 COPY --chown=odoo:odoo odoo.conf /opt/odoo/odoo.conf
 COPY --chown=odoo:odoo entrypoint.sh /opt/odoo/entrypoint.sh
 
-RUN mkdir -p /opt/odoo/logs
-RUN mkdir -p /opt/odoo/addons
-
 WORKDIR /opt/odoo/addons
 USER odoo
 ENTRYPOINT ["/opt/odoo/entrypoint.sh"]

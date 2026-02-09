@@ -149,6 +149,8 @@ EXCLUDE="symple_address_city_and_province_it,symple_contacts_default_data,sorgen
 # Export database variables for psql commands
 export PGPASSWORD=${DB_PASSWORD:-odoo}
 
+mkdir -p /opt/odoo/logs
+mkdir -p /opt/odoo/addons
 
 # Wait for database to be ready
 install_requirements
