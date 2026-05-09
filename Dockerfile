@@ -1,4 +1,4 @@
-FROM python:3.12-slim AS testrunner
+FROM python:3.9-slim AS testrunner
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
@@ -51,11 +51,16 @@ RUN pip install --no-cache-dir manifestoo
 # Install cryptography and related packages with proper compilation
 RUN pip install --upgrade pip
 RUN pip install --upgrade urllib3
-RUN pip install "cryptography==37.0.0" "pyopenssl==22.0.0"
-RUN pip install PyPDF2 phonenumbers fixedwidth pymongo dbfread
 
 COPY --chown=odoo:odoo addons/symple_addons /opt/odoo/symple_addons
+COPY --chown=odoo:odoo addons/OCA /opt/odoo/OCA
+
 RUN find /opt/odoo/symple_addons -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; 2>/dev/null
+RUN find /opt/odoo/OCA -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; 2>/dev/null
+RUN find /opt/odoo/addons -name "requirements.txt" -not -path "*/symple_addons/*" -not -path "*/OCA/*" -exec pip install --no-cache-dir -r {} \; 2>/dev/null || true
+
+RUN pip install "cryptography==37.0.0" "pyopenssl==22.0.0" "paramiko<3.0"
+RUN pip install PyPDF2 pypdf phonenumbers fixedwidth pymongo dbfread
 
 # Set entrypoint script
 # Copy odoo configuration and entrypoint

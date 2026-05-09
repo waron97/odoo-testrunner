@@ -144,7 +144,7 @@ DB_HOST=postgres
 DB_PORT=5432
 DB_USER=odoo
 DB_NAME=odoo
-EXCLUDE="symple_address_city_and_province_it,symple_contacts_default_data,sorgenia_imperex_metadata"
+EXCLUDE="symple_address_city_and_province_it,symple_contacts_default_data,sorgenia_imperex_metadata,sorgenia_ml_install_all"
 
 # Export database variables for psql commands
 export PGPASSWORD=${DB_PASSWORD:-odoo}
@@ -153,7 +153,7 @@ mkdir -p /opt/odoo/logs
 mkdir -p /opt/odoo/addons
 
 # Wait for database to be ready
-install_requirements
+# install_requirements
 wait_for_db
 
 # Initialize core requirements before the rest of the stack
